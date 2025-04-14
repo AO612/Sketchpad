@@ -1,5 +1,30 @@
 const container = document.getElementById('container')
 
+function makeColourDarker(colour) // Makes colour darker by reducing rgb values
+{   // Takes in a string rgb(r, g, b), converts to numbers to perform subtraction, and converts back to string.
+    let colourArray = [0,0,0];
+    let newColourArray = [0,0,0];
+    let index = 0;
+    for (let i = 0; i < colour.length; i++) // Convert backgroundColor string to an array of integers
+    {
+        if (colour[i] >= '0' && colour[i] <= '9')
+        {
+            colourArray[index] = colourArray[index]*10 + Number(colour[i]); // rgb value can be 1-3 digits long
+        }
+        else if (colour[i] == "\,") // Commas seperate rgb values
+        {
+            index += 1;
+        }
+    }
+    for (let i = 0; i < 3; i++) // Reduce each rgb value by 25 to darken the square's colour
+    {
+        newColourArray[i] = Math.max(0, colourArray[i]-25)
+    }
+    
+    // Convert colour array back to string
+    return "rgb("+newColourArray[0]+", "+newColourArray[1]+", "+newColourArray[2]+")"
+}
+
 function mouseOver(event) // Mouse is hovering over square
 {
     const rgbButton = document.getElementById("rgb-button");
@@ -8,28 +33,9 @@ function mouseOver(event) // Mouse is hovering over square
     if (getComputedStyle(darkenButton).backgroundColor[9] == "1") // Darken button has been pressed
     {   
         const colour = getComputedStyle(event.target).backgroundColor; // Retrieve current square colour
-        let colourArray = [0,0,0];
-        let newColourArray = [0,0,0];
-        let index = 0;
-        for (let i = 0; i < colour.length; i++) // Convert backgroundColor string to an array of integers
-        {
-            if (colour[i] >= '0' && colour[i] <= '9')
-            {
-                colourArray[index] = colourArray[index]*10 + Number(colour[i]); // rgb value can be 1-3 digits long
-            }
-            else if (colour[i] == "\,") // Commas seperate rgb values
-            {
-                index += 1;
-            }
-        }
-        for (let i = 0; i < 3; i++) // Reduce each rgb value by 25 to darken the square's colour
-        {
-            newColourArray[i] = Math.max(0, colourArray[i]-25)
-        }
         
-        let newColourString = "rgb("+newColourArray[0]+", "+newColourArray[1]+", "+newColourArray[2]+")"
-        // Convert colour array back to string and apply new colour to square
-        event.target.style.backgroundColor = newColourString;
+        // Make colour darker and apply new colour to square
+        event.target.style.backgroundColor = makeColourDarker(colour);
     }
     else // Darken button off
     {
