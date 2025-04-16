@@ -1,8 +1,8 @@
 const container = document.getElementById('container')
 
 function makeColourDarker(colour) // Makes colour darker by reducing rgb values
-{   // Takes in a string rgb(r, g, b), converts to numbers to perform subtraction, and converts back to string.
-    let colourArray = [0,0,0];
+{   
+    let colourArray = [0,0,0]; // Takes in a string rgb(r, g, b), converts to numbers to perform subtraction, and converts back to string.
     let newColourArray = [0,0,0];
     let index = 0;
     for (let i = 0; i < colour.length; i++) // Convert backgroundColor string to an array of integers
@@ -103,7 +103,7 @@ function resizeGrid(event) // Change grid dimensions
     {
         document.getElementById("resize-input").value = ""; // Clear input element of invalid value
     }
-
+    
 }
 
 function changeColours(event) // Toggle between painting with black and with random colours
